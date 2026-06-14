@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Class 10 CBSE — Study Portal</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Fraunces:ital,wght@0,700;1,400&display=swap" rel="stylesheet"/>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #F7F6F3;
+    --surface: #FFFFFF;
+    --ink: #1A1A1A;
+    --ink-muted: #6B6B6B;
+    --accent: #2563EB;
+    --accent-light: #EFF4FF;
+    --accent-hover: #1D4ED8;
+    --border: #E4E4E0;
+    --tag-bg: #F0F0EB;
+    --green: #16A34A;
+    --green-light: #F0FDF4;
+    --red: #DC2626;
+    --red-light: #FEF2F2;
+    --amber: #D97706;
+    --amber-light: #FFFBEB;
+    --radius: 10px;
+    --shadow: 0 1px 4px rgba(0,0,0,0.07);
+    --shadow-md: 0 4px 16px rgba(0,0,0,0.10);
+  }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    min-height: 100vh;
+    font-size: 15px;
+    line-height: 1.6;
+  }
+
+  /* NAV */
+  nav {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    position: sticky; top: 0; z-index: 100;
+    padding: 0 24px;
+    display: flex; align-items: center; gap: 20px;
+    height: 56px;
+  }
+  .nav-brand {
+    font-family: 'Fraunces', serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--ink);
+    text-decoration: none;
+    flex: 1;
+  }
+  .nav-brand span { color: var(--accent); }
+  nav a.nav-link {
+    font-size: 13.5px;
+    color: var(--ink-muted);
+    text-decoration: none;
+    padding: 6px 0;
+    border-bottom: 2px solid transparent;
+    transition: color .2s, border-color .2s;
+  }
+  nav a.nav-link:hover, nav a.nav-link.active {
+    color: var(--accent);
+    border-color: var(--accent);
+  }
+  .btn {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 8px 16px;
+    border-radius: 7px;
+    font-size: 13.5px;
+    font-weight: 500;
+    cursor: pointer;
+    border: none;
+    transition: background .2s, transform .1s;
+  }
+  .btn:active { transform: scale(.97); }
+  .btn-primary { background: var(--accent); color: #fff; }
+  .btn-primary:hover { background: var(--accent-hover); }
+  .btn-outline { background: transparent; border: 1.5px solid var(--border); color: var(--ink); }
+  .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+
+  /* HERO */
+  .hero {
+    padding: 56px 24px 40px;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  .hero-eyebrow {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 14px;
+  }
+  .hero h1 {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(32px, 6vw, 52px);
+    font-weight: 700;
+    line-height: 1.15;
+    color: var(--ink);
+    margin-bottom: 16px;
+  }
+  .hero h1 em {
+    font-style: italic;
+    color: var(--accent);
+  }
+  .hero p {
+    font-size: 16px;
+    color: var(--ink-muted);
+    max-width: 520px;
+    margin-bottom: 28px;
+  }
+  .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+  .stats-row {
+    display: flex; gap: 32px; flex-wrap: wrap;
+    margin-top: 40px;
+    padding-top: 28px;
+    border-top: 1px solid var(--border);
+  }
+  .stat-item { }
+  .stat-num {
+    font-family: 'Fraunces', serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--ink);
+  }
+  .stat-label {
+    font-size: 12px;
+    color: var(--ink-muted);
+    font-weight: 500;
+    letter-spacing: .03em;
+  }
+
+  /* MAIN LAYOUT */
+  main {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 24px 80px;
+  }
+
+  /* SECTION HEADER */
+  .section-header {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 18px;
+  }
+  .section-title {
+    font-family: 'Fraunces', serif;
+    font-size: 22px;
+    font-weight: 700;
+  }
+
+  /* SUBJECT TABS */
+  .subject-tabs {
+    display: flex; gap: 8px; flex-wrap: wrap;
+    margin-bottom: 28px;
+  }
+  .tab-btn {
+    padding: 7px 16px;
+    border-radius: 20px;
+    border: 1.5px solid var(--border);
+    background: var(--surface);
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    color: var(--ink-muted);
+    transition: all .2s;
+  }
+  .tab-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .tab-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+  /* MATERIAL GRID */
+  .material-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 16px;
+  }
+
+  /* MATERIAL CARD */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    transition: box-shadow .2s, transform .2s;
+    cursor: pointer;
+  }
+  .card:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
+  .card-thumb {
+    height: 130px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 36px;
+    background: var(--accent-light);
+  }
+  .card-thumb.science { background: #F0FDF4; }
+  .card-thumb.maths { background: #FFF7ED; }
+  .card-thumb.english { background: #FDF4FF; }
+  .card-thumb.sst { background: #FEFCE8; }
+  .card-thumb.hindi { background: #FFF1F2; }
+  .card-thumb.it { background: #F0F9FF; }
+  .card-body { padding: 14px 16px 16px; }
+  .card-type {
+    display: inline-flex; align-items: center; gap: 5px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    margin-bottom: 6px;
+  }
+  .card-title {
+    font-weight: 600;
+    font-size: 14.5px;
+    line-height: 1.4;
+    margin-bottom: 8px;
+  }
+  .card-meta {
+    font-size: 12px;
+    color: var(--ink-muted);
+    display: flex; align-items: center; gap: 8px;
+  }
+  .badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 600;
+  }
+  .badge-blue { background: var(--accent-light); color: var(--accent); }
+  .badge-green { background: var(--green-light); color: var(--green); }
+  .badge-amber { background: var(--amber-light); color: var(--amber); }
+
+  /* EMPTY STATE */
+  .empty-state {
+    text-align: center;
+    padding: 60px 24px;
+    color: var(--ink-muted);
+  }
+  .empty-state .icon { font-size: 48px; margin-bottom: 12px; }
+  .empty-state p { font-size: 15px; max-width: 320px; margin: 0 auto; }
+
+  /* SUBMIT MODAL */
+  .modal-overlay {
+    display: none;
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,.4);
+    z-index: 200;
+    align-items: center; justify-content: center;
+    padding: 20px;
+  }
+  .modal-overlay.open { display: flex; }
+  .modal {
+    background: var(--surface);
+    border-radius: 14px;
+    padding: 32px;
+    width: 100%;
+    max-width: 480px;
+    box-shadow: var(--shadow-md);
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+  .modal h2 {
+    font-family: 'Fraunces', serif;
+    font-size: 22px;
+    margin-bottom: 6px;
+  }
+  .modal .sub {
+    font-size: 13px;
+    color: var(--ink-muted);
+    margin-bottom: 24px;
+  }
+  .form-group { margin-bottom: 16px; }
+  .form-group label {
+    display: block;
+    font-size: 13px;
+    font-weight: 500;
+    margin-bottom: 6px;
+    color: var(--ink);
+  }
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    width: 100%;
+    padding: 10px 13px;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    font-size: 14px;
+    font-family: 'Inter', sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    transition: border-color .2s;
+    outline: none;
+  }
+  .form-group input:focus,
+  .form-group select:focus,
+  .form-group textarea:focus { border-color: var(--accent); }
+  .form-group textarea { resize: vertical; min-height: 80px; }
+  .form-note {
+    font-size: 12px;
+    color: var(--ink-muted);
+    margin-top: 4px;
+    display: flex; align-items: center; gap: 4px;
+  }
+  .modal-footer {
+    display: flex; gap: 10px; justify-content: flex-end;
+    margin-top: 24px;
+  }
+  /* ADMIN PANEL */
+  .admin-section {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 24px;
+    margin-bottom: 32px;
+  }
+  .admin-section h3 {
+    font-family: 'Fraunces', serif;
+    font-size: 18px;
+    margin-bottom: 16px;
+  }
+  .pending-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .pending-item:last-child { border-bottom: none; }
+  .pending-icon { font-size: 28px; flex-shrink: 0; }
+  .pending-info { flex: 1; }
+  .pending-info strong { font-weight: 600; font-size: 14px; }
+  .pending-info p { font-size: 12.5px; color: var(--ink-muted); margin-top: 2px; }
+  .pending-actions { display: flex; gap: 8px; flex-shrink: 0; }
+  .btn-approve {
+    background: var(--green-light); color: var(--green);
+    border: 1.5px solid #BBF7D0;
+    padding: 6px 13px; border-radius: 7px;
+    font-size: 12.5px; font-weight: 600; cursor: pointer;
+    transition: background .2s;
+  }
+  .btn-approve:hover { background: #DCFCE7; }
+  .btn-reject {
+    background: var(--red-light); color: var(--red);
+    border: 1.5px solid #FECACA;
+    padding: 6px 13px; border-radius: 7px;
+    font-size: 12.5px; font-weight: 600; cursor: pointer;
+    transition: background .2s;
+  }
+  .btn-reject:hover { background: #FEE2E2; }
+
+  /* TOAST */
+  .toast {
+    position: fixed; bottom: 24px; right: 24px;
+    background: var(--ink);
+    color: #fff;
+    padding: 12px 20px;
+    border-radius: 9px;
+    font-size: 14px;
+    font-weight: 500;
+    z-index: 999;
+    opacity: 0;
+    transform: translateY(12px);
+    transition: all .3s;
+    pointer-events: none;
+  }
+  .toast.show { opacity: 1; transform: translateY(0); }
+
+  /* VIEWS */
+  .view { display: none; }
+  .view.active { display: block; }
+
+  /* FOOTER */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 20px 24px;
+    text-align: center;
+    font-size: 12.5px;
+    color: var(--ink-muted);
+  }
+
+  @media (max-width: 600px) {
+    .hero { padding: 36px 16px 28px; }
+    main { padding: 0 16px 60px; }
+    .stats-row { gap: 20px; }
+    .modal { padding: 24px 20px; }
+    .pending-actions { flex-direction: column; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-brand" href="#" onclick="showView('home')">Class<span>10</span></a>
+  <a class="nav-link active" href="#" onclick="showView('home');setActive(this)">Home</a>
+  <a class="nav-link" href="#" onclick="showView('materials');setActive(this)">Materials</a>
+  <a class="nav-link" href="#" onclick="showView('admin');setActive(this)">Admin</a>
+  <button class="btn btn-primary" onclick="openModal()" style="margin-left:auto;font-size:13px;padding:7px 14px;">+ Submit</button>
+</nav>
+
+<!-- HOME VIEW -->
+<div id="view-home" class="view active">
+  <div class="hero">
+    <div class="hero-eyebrow">CBSE Board · Class 10</div>
+    <h1>Your study material,<br/><em>all in one place.</em></h1>
+    <p>Notes, one-shots, videos, and links — organised by subject, approved before going live.</p>
+    <div class="hero-actions">
+      <button class="btn btn-primary" onclick="showView('materials');setActiveByIndex(1)">Browse Materials</button>
+      <button class="btn btn-outline" onclick="openModal()">Submit Something</button>
+    </div>
+    <div class="stats-row">
+      <div class="stat-item">
+        <div class="stat-num" id="stat-total">6</div>
+        <div class="stat-label">Subjects</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num" id="stat-resources">12</div>
+        <div class="stat-label">Resources</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num" id="stat-pending">3</div>
+        <div class="stat-label">Pending Review</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Quick subject cards on home -->
+  <main>
+    <div class="section-header">
+      <div class="section-title">Browse by Subject</div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin-bottom:40px;">
+      <div class="card" onclick="filterSubject('Science');showView('materials');setActiveByIndex(1)">
+        <div class="card-thumb science">🔬</div>
+        <div class="card-body">
+          <div class="card-title">Science</div>
+          <div class="card-meta"><span class="badge badge-blue">Physics · Chemistry · Bio</span></div>
+        </div>
+      </div>
+      <div class="card" onclick="filterSubject('Maths');showView('materials');setActiveByIndex(1)">
+        <div class="card-thumb maths">📐</div>
+        <div class="card-body">
+          <div class="card-title">Mathematics</div>
+          <div class="card-meta"><span class="badge badge-blue">Algebra · Geometry</span></div>
+        </div>
+      </div>
+      <div class="card" onclick="filterSubject('English');showView('materials');setActiveByIndex(1)">
+        <div class="card-thumb english">📖</div>
+        <div class="card-body">
+          <div class="card-title">English</div>
+          <div class="card-meta"><span class="badge badge-blue">Literature · Grammar</span></div>
+        </div>
+      </div>
+      <div class="card" onclick="filterSubject('SST');showView('materials');setActiveByIndex(1)">
+        <div class="card-thumb sst">🌍</div>
+        <div class="card-body">
+          <div class="card-title">Social Science</div>
+          <div class="card-meta"><span class="badge badge-blue">History · Geo · Civics</span></div>
+        </div>
+      </div>
+      <div class="card" onclick="filterSubject('Hindi');showView('materials');setActiveByIndex(1)">
+        <div class="card-thumb hindi">📝</div>
+        <div class="card-body">
+          <div class="card-title">Hindi</div>
+          <div class="card-meta"><span class="badge badge-blue">Kshitij · Sparsh</span></div>
+        </div>
+      </div>
+      <div class="card" onclick="filterSubject('IT');showView('materials');setActiveByIndex(1)">
+        <div class="card-thumb it">💻</div>
+        <div class="card-body">
+          <div class="card-title">IT (Code 402)</div>
+          <div class="card-meta"><span class="badge badge-blue">Python · Web</span></div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- MATERIALS VIEW -->
+<div id="view-materials" class="view">
+  <main>
+    <div style="height:28px"></div>
+    <div class="section-header">
+      <div class="section-title">Study Materials</div>
+    </div>
+    <div class="subject-tabs" id="subject-tabs">
+      <button class="tab-btn active" onclick="filterSubject('All');setTab(this)">All</button>
+      <button class="tab-btn" onclick="filterSubject('Science');setTab(this)">🔬 Science</button>
+      <button class="tab-btn" onclick="filterSubject('Maths');setTab(this)">📐 Maths</button>
+      <button class="tab-btn" onclick="filterSubject('English');setTab(this)">📖 English</button>
+      <button class="tab-btn" onclick="filterSubject('SST');setTab(this)">🌍 SST</button>
+      <button class="tab-btn" onclick="filterSubject('Hindi');setTab(this)">📝 Hindi</button>
+      <button class="tab-btn" onclick="filterSubject('IT');setTab(this)">💻 IT</button>
+    </div>
+    <div class="material-grid" id="material-grid"></div>
+  </main>
+</div>
+
+<!-- ADMIN VIEW -->
+<div id="view-admin" class="view">
+  <main>
+    <div style="height:28px"></div>
+    <div class="section-header">
+      <div class="section-title">Admin Panel</div>
+    </div>
+    <p style="font-size:13.5px;color:var(--ink-muted);margin-bottom:24px;">Review submitted materials. Approve to make them public, or reject.</p>
+    <div class="admin-section">
+      <h3>Pending Submissions</h3>
+      <div id="pending-list"></div>
+    </div>
+    <div class="admin-section">
+      <h3>All Published Materials</h3>
+      <div id="published-list"></div>
+    </div>
+  </main>
+</div>
+
+<!-- SUBMIT MODAL -->
+<div class="modal-overlay" id="modal-overlay" onclick="closeModalOnBg(event)">
+  <div class="modal">
+    <h2>Submit Material</h2>
+    <p class="sub">Your submission will be reviewed before it goes live. ✅</p>
+    <div class="form-group">
+      <label>Your Name</label>
+      <input type="text" id="sub-name" placeholder="e.g. Riya Sharma"/>
+    </div>
+    <div class="form-group">
+      <label>Subject</label>
+      <select id="sub-subject">
+        <option value="">Select subject</option>
+        <option>Science</option>
+        <option>Maths</option>
+        <option>English</option>
+        <option>SST</option>
+        <option>Hindi</option>
+        <option>IT</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Material Type</label>
+      <select id="sub-type">
+        <option value="">Select type</option>
+        <option>One Shot</option>
+        <option>Video</option>
+        <option>Notes / PDF</option>
+        <option>Image</option>
+        <option>Link</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Title</label>
+      <input type="text" id="sub-title" placeholder="e.g. Chemical Reactions One Shot"/>
+    </div>
+    <div class="form-group">
+      <label>Link / URL</label>
+      <input type="url" id="sub-link" placeholder="https://..."/>
+      <div class="form-note">🔒 Only approved links are made public.</div>
+    </div>
+    <div class="form-group">
+      <label>Description (optional)</label>
+      <textarea id="sub-desc" placeholder="What's covered in this material?"></textarea>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline" onclick="closeModal()">Cancel</button>
+      <button class="btn btn-primary" onclick="submitMaterial()">Submit for Review</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<footer>
+  Class 10 CBSE Study Portal — Built by Aman &nbsp;·&nbsp; Content is moderated before publishing
+</footer>
+
+<script>
+// ── DATA ──────────────────────────────────────────────────────────────
+const SUBJECTS = {
+  Science: { icon:'🔬', cls:'science' },
+  Maths:   { icon:'📐', cls:'maths'   },
+  English: { icon:'📖', cls:'english' },
+  SST:     { icon:'🌍', cls:'sst'     },
+  Hindi:   { icon:'📝', cls:'hindi'   },
+  IT:      { icon:'💻', cls:'it'      },
+};
+
+const TYPE_ICONS = {
+  'One Shot': '⚡', 'Video': '🎬', 'Notes / PDF': '📄', 'Image': '🖼️', 'Link': '🔗'
+};
+
+let materials = [
+  { id:1, subject:'Science', type:'One Shot', title:'Chemical Reactions & Equations — Full One Shot', link:'#', desc:'All reactions, balancing, types.', status:'published', by:'Aman' },
+  { id:2, subject:'Science', type:'Video',    title:'Light – Reflection & Refraction (Class 10)', link:'#', desc:'Vedantu lecture, full chapter.', status:'published', by:'Priya' },
+  { id:3, subject:'Maths',   type:'One Shot', title:'Real Numbers One Shot', link:'#', desc:'Euclid, HCF, LCM, Irrational numbers.', status:'published', by:'Aman' },
+  { id:4, subject:'Maths',   type:'Notes / PDF', title:'Quadratic Equations Formula Sheet', link:'#', desc:'All formulas on one page.', status:'published', by:'Rohan' },
+  { id:5, subject:'English', type:'Link',     title:'First Flight — Chapter Summaries', link:'#', desc:'All chapters summarised.', status:'published', by:'Aman' },
+  { id:6, subject:'SST',     type:'One Shot', title:'Nationalism in India — One Shot', link:'#', desc:'Gandhi, Non-Cooperation, timeline.', status:'published', by:'Aman' },
+  { id:7, subject:'Hindi',   type:'Notes / PDF', title:'Kshitij — Surdas ke Pad Notes', link:'#', desc:'Meaning, figure of speech, Q&A.', status:'published', by:'Meera' },
+  { id:8, subject:'IT',      type:'Video',    title:'Python Basics for Class 10 IT', link:'#', desc:'Variables, loops, functions.', status:'published', by:'Aman' },
+  { id:9, subject:'SST',     type:'Image',    title:'India Political Map (High Res)', link:'#', desc:'For Geography map work.', status:'published', by:'Aman' },
+  { id:10, subject:'Maths',  type:'Video',    title:'Trigonometry — All Formulas & Tricks', link:'#', desc:'Sin, cos, tan identities.', status:'published', by:'Rahul' },
+  { id:11, subject:'Science',type:'Notes / PDF', title:'Heredity and Evolution Notes', link:'#', desc:'Mendel, DNA, Evolution theory.', status:'published', by:'Aman' },
+  { id:12, subject:'English',type:'One Shot', title:'Footprints Without Feet — One Shot', link:'#', desc:'All stories summarised with Q&A.', status:'published', by:'Sneha' },
+  // Pending
+  { id:13, subject:'Maths',  type:'Video',    title:'Surface Areas & Volumes — Full Lecture', link:'#', desc:'', status:'pending', by:'Arjun' },
+  { id:14, subject:'Science',type:'Link',     title:'NCERT Solutions Science Ch 1-5', link:'#', desc:'Free NCERT solutions site.', status:'pending', by:'Divya' },
+  { id:15, subject:'SST',    type:'One Shot', title:'Resources & Development One Shot', link:'#', desc:'Geography chapter 1.', status:'pending', by:'Kabir' },
+];
+
+let nextId = 16;
+let currentFilter = 'All';
+
+// ── VIEWS ─────────────────────────────────────────────────────────────
+function showView(name) {
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  document.getElementById('view-' + name).classList.add('active');
+  if (name === 'materials') renderGrid();
+  if (name === 'admin') renderAdmin();
+  updateStats();
+}
+
+function setActive(el) {
+  document.querySelectorAll('.nav-link').forEach(a => a.classList.remove('active'));
+  el.classList.add('active');
+}
+
+function setActiveByIndex(i) {
+  const links = document.querySelectorAll('.nav-link');
+  links.forEach(a => a.classList.remove('active'));
+  links[i].classList.add('active');
+}
+
+// ── GRID ──────────────────────────────────────────────────────────────
+function filterSubject(sub) {
+  currentFilter = sub;
+  renderGrid();
+  // sync tabs
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.textContent.includes(sub) || (sub === 'All' && btn.textContent === 'All'));
+  });
+}
+
+function setTab(el) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  el.classList.add('active');
+}
+
+function renderGrid() {
+  const grid = document.getElementById('material-grid');
+  const published = materials.filter(m => m.status === 'published');
+  const filtered = currentFilter === 'All' ? published : published.filter(m => m.subject === currentFilter);
+  
+  if (filtered.length === 0) {
+    grid.innerHTML = `<div class="empty-state" style="grid-column:1/-1">
+      <div class="icon">📭</div>
+      <p>No materials yet for this subject. Be the first to submit!</p>
+      <button class="btn btn-primary" style="margin-top:16px" onclick="openModal()">Submit Material</button>
+    </div>`;
+    return;
+  }
+
+  grid.innerHTML = filtered.map(m => {
+    const s = SUBJECTS[m.subject];
+    const typeIcon = TYPE_ICONS[m.type] || '📄';
+    return `<div class="card" onclick="window.open('${m.link}','_blank')">
+      <div class="card-thumb ${s.cls}">${s.icon}</div>
+      <div class="card-body">
+        <div class="card-type">${typeIcon} ${m.type}</div>
+        <div class="card-title">${m.title}</div>
+        <div class="card-meta">
+          <span class="badge badge-blue">${m.subject}</span>
+          <span>by ${m.by}</span>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// ── ADMIN ─────────────────────────────────────────────────────────────
+function renderAdmin() {
+  const pending = materials.filter(m => m.status === 'pending');
+  const published = materials.filter(m => m.status === 'published');
+
+  const pList = document.getElementById('pending-list');
+  if (pending.length === 0) {
+    pList.innerHTML = '<p style="color:var(--ink-muted);font-size:14px;">No pending submissions. ✅</p>';
+  } else {
+    pList.innerHTML = pending.map(m => {
+      const s = SUBJECTS[m.subject];
+      return `<div class="pending-item" id="pitem-${m.id}">
+        <div class="pending-icon">${s.icon}</div>
+        <div class="pending-info">
+          <strong>${m.title}</strong>
+          <p>${m.subject} · ${m.type} · Submitted by ${m.by}</p>
+        </div>
+        <div class="pending-actions">
+          <button class="btn-approve" onclick="approve(${m.id})">✓ Approve</button>
+          <button class="btn-reject" onclick="reject(${m.id})">✕ Reject</button>
+        </div>
+      </div>`;
+    }).join('');
+  }
+
+  const pubList = document.getElementById('published-list');
+  pubList.innerHTML = published.map(m => {
+    const s = SUBJECTS[m.subject];
+    return `<div class="pending-item">
+      <div class="pending-icon">${s.icon}</div>
+      <div class="pending-info">
+        <strong>${m.title}</strong>
+        <p>${m.subject} · ${m.type} · by ${m.by}</p>
+      </div>
+      <div><span class="badge badge-green">Published</span></div>
+    </div>`;
+  }).join('');
+}
+
+function approve(id) {
+  const m = materials.find(x => x.id === id);
+  if (m) { m.status = 'published'; showToast('✅ Approved and published!'); renderAdmin(); updateStats(); }
+}
+
+function reject(id) {
+  materials = materials.filter(x => x.id !== id);
+  showToast('🗑️ Submission rejected.');
+  renderAdmin(); updateStats();
+}
+
+// ── MODAL ─────────────────────────────────────────────────────────────
+function openModal() {
+  document.getElementById('modal-overlay').classList.add('open');
+}
+function closeModal() {
+  document.getElementById('modal-overlay').classList.remove('open');
+}
+function closeModalOnBg(e) {
+  if (e.target === document.getElementById('modal-overlay')) closeModal();
+}
+
+function submitMaterial() {
+  const name = document.getElementById('sub-name').value.trim();
+  const subject = document.getElementById('sub-subject').value;
+  const type = document.getElementById('sub-type').value;
+  const title = document.getElementById('sub-title').value.trim();
+  const link = document.getElementById('sub-link').value.trim();
+
+  if (!name || !subject || !type || !title || !link) {
+    showToast('⚠️ Please fill all required fields.');
+    return;
+  }
+
+  materials.push({
+    id: nextId++,
+    subject, type, title, link,
+    desc: document.getElementById('sub-desc').value.trim(),
+    status: 'pending',
+    by: name
+  });
+
+  // clear form
+  ['sub-name','sub-title','sub-link','sub-desc'].forEach(id => document.getElementById(id).value = '');
+  document.getElementById('sub-subject').value = '';
+  document.getElementById('sub-type').value = '';
+
+  closeModal();
+  showToast('📬 Submitted! Waiting for approval.');
+  updateStats();
+}
+
+// ── STATS ─────────────────────────────────────────────────────────────
+function updateStats() {
+  document.getElementById('stat-resources').textContent = materials.filter(m => m.status === 'published').length;
+  document.getElementById('stat-pending').textContent = materials.filter(m => m.status === 'pending').length;
+}
+
+// ── TOAST ─────────────────────────────────────────────────────────────
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3000);
+}
+
+// ── INIT ──────────────────────────────────────────────────────────────
+renderGrid();
+</script>
+</body>
+</html>
